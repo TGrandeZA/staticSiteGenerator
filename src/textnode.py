@@ -1,3 +1,4 @@
+
 #Textnode class is a placeholder that acts as a data structure to organise MARKDOWN file for later conversion to HTML
 class TextNode: 
 
@@ -11,7 +12,11 @@ class TextNode:
     def __eq__ (self, other):
         
         #returns true if they're 'equal'
-        return (self.text, self.text_type, self.url) == (other.text, other.text_type, other.url) 
+        return (
+            self.text_type == other.text_type
+            and self.text == other.text
+            and self.url == other.url
+        )
 
     #returns a string representation of the TextNode, for debugging and logging
     def __repr__(self): 
