@@ -20,17 +20,40 @@ class HTMLNode:
         if self.props == None: 
             return ""
         
-        parts = []
+        attributes = []
         for key, value in self.props.items(): 
 
-            parts.append(f'{key}="{value}"')
+            attributes.append(f'{key}="{value}"')
 
     # Join the parts with spaces and return with a leading space
-        return ' ' + ' '.join(parts)
+        return ' ' + ' '.join(attributes)
 
     def __repr__(self):
 
         return f"HTMLNode({self.tag}, {self.value}, {self.children}, {self.props})"
+
+class LeafNode(HTMLNode): 
+
+    def __init__(self, tag, value, props=None):
+        super().__init__(tag, value, None, props)
+        if not value:
+            raise ValueError("Value must be provided for LeafNode.")
+
+    def to_html(self):
+        if not self.value:
+            raise ValueError("Value cannot be None for a LeafNode.")
+    
+        if not self.tag:
+            return self.value
+
+        # Use props_to_html to get properly formatted attributes
+        attributes = self.props_to_html()
+        return f'<{self.tag}{attributes}>{self.value}</{self.tag}>'
+                
+
+
+
+
 
     
 
